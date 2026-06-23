@@ -1,0 +1,66 @@
+body {
+  margin: 0;
+  background: #080b14;
+  color: white;
+  font-family: monospace;
+}
+
+.container {
+  min-height: 100vh;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 28px;
+  letter-spacing: 2px;
+  margin-bottom: 56px;
+}
+
+p {
+  margin: 18px 0;
+  color: #d8e6ff;
+}
+
+button {
+  margin: 48px auto;
+  padding: 14px 28px;
+  background: transparent;
+  color: #70b7ff;
+  border: 1px solid #70b7ff;
+  border-radius: 4px;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+button:hover {
+  color: white;
+  border-color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+#result {
+  margin: 32px 0;
+  color: #70b7ff;
+  font-size: 20px;
+}
+
+.population {
+  margin-top: 56px;
+}
+
+#count {
+  font-size: 48px;
+  color: #70b7ff;
+}
+
+#citizenList {
+  margin-top: 24px;
+  line-height: 1.8;
+  color: #c8d8f5;
+}

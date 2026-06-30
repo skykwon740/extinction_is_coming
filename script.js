@@ -43,22 +43,29 @@ async function loadCitizens() {
 async function registerCitizen() {
   const existingCitizen = localStorage.getItem("citizen_number");
 
+  // 이미 등록된 경우
   if (existingCitizen) {
-    showCitizen(existingCitizen);
+    result.classList.remove("hidden");
+    result.innerHTML = `
+      Citizen #${String(existingCitizen).padStart(5, "0")}<br/>
+      Already registered.
+    `;
     return;
   }
 
-  const { data: allCitizens, error: countError } = await db
+  // 전체 시민 수 가져오기
+  const { count, error: countError } = await db
     .from("citizens")
-    .select("citizen_number");
+    .select("*", { count: "exact", head: true });
 
   if (countError) {
-    console.error(countError);
+    console.error("Count Error:", countError);
     return;
   }
 
-  const newNumber = allCitizens.length + 1;
+  const newNumber = count + 1;
 
+  // Supabase에 등록
   const { error } = await db
     .from("citizens")
     .insert({
@@ -66,14 +73,21 @@ async function registerCitizen() {
     });
 
   if (error) {
-    console.error(error);
+    console.error("Insert Error:", error);
     result.classList.remove("hidden");
     result.textContent = "Registration failed.";
     return;
   }
 
+  // 브라우저에 저장
   localStorage.setItem("citizen_number", newNumber);
-  showCitizen(newNumber);
+
+  result.classList.remove("hidden");
+  result.innerHTML = `
+    Citizen #${String(newNumber).padStart(5, "0")}<br/>
+    You are now a citizen of Cyclopia.
+  `;
+
   loadCitizens();
 }
 

@@ -19,7 +19,7 @@ h1 {
     font-optical-sizing: auto;
     font-weight: 200;
     font-style: normal;
-    font-size: 204px;
+    font-size: clamp(64px, 16vw, 204px);
     margin-bottom: 56px;
     margin-top: 0px;
 }
@@ -29,7 +29,7 @@ h2 {
     font-optical-sizing: auto;
     font-weight: 200;
     font-style: normal;
-    font-size: 50px;
+    font-size: clamp(24px, 6vw, 50px);
 }
 
 p {

@@ -24,6 +24,11 @@ h1 {
     margin-top: 0px;
 }
 
+.blue-dot {
+  color: #0000ff;
+  /* text-shadow: 0 0 10px #0000ff; */
+}
+
 h2 {
     font-family: "Stack Sans Notch", sans-serif;
     font-optical-sizing: auto;
@@ -47,8 +52,8 @@ p {
 
     margin: 40px auto;
     background: transparent;
-    color: #0c22ff;
-    border: 4px solid #0c22ff;
+    color: #0000ff;
+    border: 4px solid #0000ff;
     /* border-radius: 4px; */
     cursor: pointer;
 
@@ -69,7 +74,7 @@ p {
 
 #result {
     margin: 20px 0;
-    color: #0c22ff;
+    color: #0000ff;
     font-size: 20px;
 }
 
@@ -80,7 +85,7 @@ p {
 #count {
     font-family: "Stack Sans Notch", sans-serif;
     font-size: 50px;
-    color: #0c22ff;
+    color: #0000ff;
 }
 
 .recent-section {

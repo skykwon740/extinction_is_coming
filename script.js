@@ -8,20 +8,38 @@ const result = document.getElementById("result");
 const countEl = document.getElementById("count");
 const citizenList = document.getElementById("citizenList");
 
-async function loadCitizens() {
-  // 전체 시민 수 가져오기
-  const { count, error: countError } = await db
+function formatCitizenNumber(number) {
+  return String(number).padStart(5, "0");
+}
+
+function showCitizen(number, message) {
+  result.classList.remove("hidden");
+  result.innerHTML = `
+    Citizen #${formatCitizenNumber(number)}<br/>
+    ${message}
+  `;
+}
+
+async function getCitizenCount() {
+  const { count, error } = await db
     .from("citizens")
     .select("*", { count: "exact", head: true });
 
-  if (countError) {
-    console.error("Count Error:", countError);
-    return;
+  if (error) {
+    console.error("Count Error:", error);
+    return null;
   }
+
+  return count;
+}
+
+async function loadCitizens() {
+  const count = await getCitizenCount();
+
+  if (count === null) return;
 
   countEl.textContent = count;
 
-  // 최근 20명 가져오기
   const { data, error } = await db
     .from("citizens")
     .select("*")
@@ -34,38 +52,24 @@ async function loadCitizens() {
   }
 
   citizenList.innerHTML = data
-    .map(
-      c => `<div>Citizen #${String(c.citizen_number).padStart(5, "0")}</div>`
-    )
+    .map(c => `<div>Citizen #${formatCitizenNumber(c.citizen_number)}</div>`)
     .join("");
 }
 
 async function registerCitizen() {
   const existingCitizen = localStorage.getItem("citizen_number");
 
-  // 이미 등록된 경우
   if (existingCitizen) {
-    result.classList.remove("hidden");
-    result.innerHTML = `
-      Citizen #${String(existingCitizen).padStart(5, "0")}<br/>
-      Already registered.
-    `;
+    showCitizen(existingCitizen, "Already registered.");
     return;
   }
 
-  // 전체 시민 수 가져오기
-  const { count, error: countError } = await db
-    .from("citizens")
-    .select("*", { count: "exact", head: true });
+  const count = await getCitizenCount();
 
-  if (countError) {
-    console.error("Count Error:", countError);
-    return;
-  }
+  if (count === null) return;
 
   const newNumber = count + 1;
 
-  // Supabase에 등록
   const { error } = await db
     .from("citizens")
     .insert({
@@ -79,24 +83,11 @@ async function registerCitizen() {
     return;
   }
 
-  // 브라우저에 저장
   localStorage.setItem("citizen_number", newNumber);
 
-  result.classList.remove("hidden");
-  result.innerHTML = `
-    Citizen #${String(newNumber).padStart(5, "0")}<br/>
-    You are now a citizen of Cyclopia.
-  `;
+  showCitizen(newNumber, "You are now a citizen of Cyclopia.");
 
   loadCitizens();
-}
-
-function showCitizen(number) {
-  result.classList.remove("hidden");
-  result.innerHTML = `
-    Citizen #${String(number).padStart(5, "0")}<br/>
-    You are now a citizen of Cyclopia.
-  `;
 }
 
 enterBtn.addEventListener("click", registerCitizen);

@@ -93,3 +93,88 @@ async function registerCitizen() {
 enterBtn.addEventListener("click", registerCitizen);
 
 loadCitizens();
+
+
+// -------------------------
+// Wind Line Animation
+// line.png를 캔버스에 그리고, 바람처럼 아주 살짝 흔들리게 함
+// 모바일에서는 조각 수/속도/흔들림을 줄여서 덜 자잘하게 보이게 함
+// -------------------------
+
+const canvas = document.getElementById("windLine");
+const ctx = canvas.getContext("2d");
+
+const lineImg = new Image();
+lineImg.src = "line.png";
+
+let time = 0;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+lineImg.onload = () => {
+  animateLine();
+};
+
+function animateLine() {
+  const isMobile = window.innerWidth < 768;
+
+  // 모바일/데스크탑별 조절값
+  const speed = isMobile ? 0.005 : 0.01;
+  const slices = isMobile ? 42 : 90;
+  const amp1 = isMobile ? 1.4 : 3;
+  const amp2 = isMobile ? 0.8 : 2;
+
+  time += speed;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // 라인 이미지 크기/위치
+  const imgWidth = isMobile
+    ? canvas.width * 1.65
+    : canvas.width * 1.15;
+
+  const imgHeight = imgWidth * (lineImg.height / lineImg.width);
+
+  const startX = isMobile
+    ? -canvas.width * 0.32
+    : -canvas.width * 0.08;
+
+  const startY = isMobile
+    ? -44
+    : -74;
+
+  const sliceWidth = imgWidth / slices;
+
+  for (let i = 0; i < slices; i++) {
+    const sx = (lineImg.width / slices) * i;
+    const sw = lineImg.width / slices;
+    const dx = startX + sliceWidth * i;
+
+    // 바람 흔들림: 두 개의 느린 사인파를 섞어서 자연스럽게 만듦
+    const wind =
+      Math.sin(time + i * 0.18) * 5 +
+      Math.sin(time * 1.3 + i * 0.35) * 2;
+
+    const dy = startY + wind;
+
+    ctx.drawImage(
+      lineImg,
+      sx,
+      0,
+      sw,
+      lineImg.height,
+      dx,
+      dy,
+      sliceWidth + 1,
+      imgHeight
+    );
+  }
+
+  requestAnimationFrame(animateLine);
+}

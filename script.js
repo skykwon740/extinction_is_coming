@@ -125,10 +125,10 @@ function animateLine() {
   const isMobile = window.innerWidth < 768;
 
   // 모바일/데스크탑별 조절값
-  const speed = isMobile ? 0.005 : 0.01;
+  const speed = isMobile ? 0.01 : 0.01;
   const slices = isMobile ? 42 : 90;
-  const amp1 = isMobile ? 1.4 : 3;
-  const amp2 = isMobile ? 0.8 : 2;
+  const amp1 = isMobile ? 5 : 4;
+  const amp2 = isMobile ? 2 : 2;
 
   time += speed;
 
@@ -158,8 +158,8 @@ function animateLine() {
 
     // 바람 흔들림: 두 개의 느린 사인파를 섞어서 자연스럽게 만듦
     const wind =
-      Math.sin(time + i * 0.18) * 5 +
-      Math.sin(time * 1.3 + i * 0.35) * 2;
+      Math.sin(time + i * 0.18) * amp1 +
+      Math.sin(time * 0.7 + i * 0.35) * amp2;
 
     const dy = startY + wind;
 

@@ -112,3 +112,118 @@ p {
   position: relative;
   z-index: 2;
 }
+
+
+.hidden {
+  display: none;
+}
+
+/* 질문 진행 상태 */
+.question-progress {
+  margin-bottom: 24px;
+  color: #0000ff;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+
+/* 질문 영역 */
+#screeningSection {
+  max-width: 720px;
+  min-height: 70vh;
+  margin: 0 auto;
+  padding-top: 100px;
+  text-align: center;
+}
+
+#questionText {
+  margin-bottom: 48px;
+  line-height: 1.3;
+}
+
+/* 선택지 */
+.choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+
+.choice-button {
+  width: 100%;
+  padding: 18px 20px;
+
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+
+  font-family: "Syne Mono", monospace;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.choice-button:hover {
+  border-color: #0000ff;
+  color: #0000ff;
+}
+
+.choice-button.selected {
+  color: #0000ff;
+  border-color: #0000ff;
+  background: rgba(49, 92, 255, 0.08);
+}
+
+/* 선택 전 NEXT 버튼 */
+#nextBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* 처리 화면 */
+#processingSection {
+  min-height: 70vh;
+  padding-top: 180px;
+  text-align: center;
+}
+
+.processing-text {
+  animation: flicker 1.4s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* 최종 결과 */
+#result {
+  min-height: 55vh;
+  padding-top: 160px;
+  color: #0000ff;
+  text-align: center;
+  font-size: 18px;
+  line-height: 2;
+}
+
+@media (max-width: 768px) {
+  #screeningSection {
+    padding: 80px 20px 0;
+  }
+
+  #questionText {
+    font-size: clamp(24px, 7vw, 40px);
+  }
+
+  .choice-button {
+    padding: 16px;
+    font-size: 14px;
+  }
+}

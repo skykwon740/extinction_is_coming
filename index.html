@@ -1,40 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EXTINCTION IS COMING</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <canvas id="windLine"></canvas>
-  <main class="container">
-    <h1>
-      EXTINCTION<br>
-      IS<br>
-      COMING<span class="blue-dot">.</span>
-    </h1>
 
-    <section class="intro">
-      <p>We started seeing the lines.</p>
-      <p>The lines became a structure.</p>
-      <p>Cyclopia was built.</p>
-      <p>We are accepting new citizens.</p>
+  <main class="container">
+
+    <!-- 처음 보이는 랜딩 화면 -->
+    <section id="landingSection">
+      <h1>
+        EXTINCTION<br>
+        IS<br>
+        COMING<span class="blue-dot">.</span>
+      </h1>
+
+      <section class="intro">
+        <p>We started seeing the lines.</p>
+        <p>The lines became a structure.</p>
+        <p>Cyclopia was built.</p>
+        <p>We are accepting new citizens.</p>
+      </section>
+
+      <button id="enterBtn" class="main-button">
+        ENTER CYCLOPIA
+      </button>
     </section>
 
-    <button id="enterBtn" class="main-button">ENTER CYCLOPIA</button>
 
+    <!-- 입국 심사 화면 -->
+    <section id="screeningSection" class="hidden">
+      <p id="questionProgress" class="question-progress"></p>
+
+      <h2 id="questionText"></h2>
+
+      <div id="choiceList" class="choice-list"></div>
+
+      <button
+        id="nextBtn"
+        class="main-button"
+        disabled
+      >
+        NEXT
+      </button>
+    </section>
+
+
+    <!-- 처리 중 화면 -->
+    <section id="processingSection" class="hidden">
+      <h2>PROCESSING</h2>
+      <p class="processing-text">Reviewing responses...</p>
+    </section>
+
+
+    <!-- 결과 화면 -->
     <section id="result" class="hidden"></section>
 
+
+    <!-- 시민 현황 -->
     <section class="population">
       <h2>CYCLOPIA POPULATION</h2>
       <div id="count">0</div>
@@ -44,6 +82,7 @@
       <h2>RECENT CITIZENS</h2>
       <div id="citizenList"></div>
     </section>
+
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
